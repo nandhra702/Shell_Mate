@@ -16,7 +16,13 @@ log_command() {
     fi
   done
 
-  echo "$formatted_date || $(pwd) || $cmd" >> ~/logger.txt
+local venv=""
+  if [[ -n "$VIRTUAL_ENV" ]]; then
+    venv="(venv: $(basename "$VIRTUAL_ENV"))"
+  fi
+
+  echo "$formatted_date || $(pwd) || $venv: $cmd" >> ~/logger.txt
+
 
   local line_count
   line_count=$(wc -l < ~/logger.txt)
