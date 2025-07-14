@@ -1,6 +1,6 @@
-# 🐚 Shell Mate
+#  Shell Mate
 
-> A sleek, no-fuss terminal command logger — minimal, powerful, and always watching (the useful stuff only 😉).
+> Terminal command logger 
 
 ---
 
@@ -40,17 +40,7 @@ source ~/.bashrc
 
 ## 💡 Roadmap Ideas
 
-- [ ] `zoxide`-like smart directory jumping  
-- [ ] Log search and filters (by date, dir, etc.)  
-- [ ] Optional GUI overlay  
-- [ ] Archive logs monthly  
-
----
-
-## 🤝 Contribute
-
-PRs and ideas welcome!  
-If you’ve got feature requests or bug fixes, feel free to open an issue or submit a pull request.
+- [ ] `zoxide`-like smart directory jumping
 
 ---
 
@@ -64,9 +54,3 @@ shell_mate/
 ├── .logger_config       # Stores filters, thresholds
 └── logs/                # Where your history lives
 ```
-
----
-
-## ⚠️ Disclaimer
-
-This tool is for **personal productivity use** only. Be mindful when using it on shared or sensitive systems.
