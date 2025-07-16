@@ -4,18 +4,18 @@
 
 ---
 
-## ✨ Features
+##  Features
 
-✅ Logs every meaningful command  
-✅ Includes timestamp + working directory  
-✅ Ignores noisy commands like `ls`, `clear`, etc.  
-✅ Auto-trims the log file if it gets too big  
-✅ Use `showlog` from *anywhere* to view the logs  
-✅ Simple installation, lightweight footprint
+> Logs every meaningful command  
+> Includes timestamp + working directory  
+> Ignores noisy commands like `ls`, `clear`, etc.  
+> Auto-trims the log file if it gets too big  
+> Use `showlog` from *anywhere* to view the logs  
+> Simple installation, lightweight footprint
 
 ---
 
-## 🚀 Installation
+## Installation
 
 ```bash
 git clone https://github.com/nandhra702/shell_mate.git
@@ -26,7 +26,7 @@ source ~/.bashrc
 
 ---
 
-## 🧪 Test It Out
+##  Test It Out
 
 1. **Restart** your terminal  
 2. Run a few shell commands (`cd`, `mkdir`, `nano`, etc.)  
@@ -38,13 +38,13 @@ source ~/.bashrc
 
 ---
 
-## 💡 Roadmap Ideas
+##  Roadmap Ideas
 
 - [ ] `zoxide`-like smart directory jumping
 
 ---
 
-## 📂 Project Structure
+##  Project Structure
 
 ```
 shell_mate/
