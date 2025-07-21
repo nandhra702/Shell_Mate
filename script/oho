@@ -1,0 +1,37 @@
+#!/bin/bash
+
+last_cmd=$(grep '##ERROR' ~/logger.txt | tail -n 1 | sed 's/.*: //' | sed 's/##ERROR.*//')
+spellchecker_path="/home/sukhaj/Shell_Mate/script/spellchecker"
+
+if [[ -z "$last_cmd" ]]; then
+  echo "No recent failed command found in logs."
+  exit 1
+fi
+
+# Pass the entire command, not just two words
+mapfile -t suggestions < <("$spellchecker_path" "$last_cmd")
+
+if [[ ${#suggestions[@]} -eq 0 ]]; then
+  echo "No suggestion found by spellfixer."
+  exit 1
+fi
+
+index=0
+total=${#suggestions[@]}
+
+while true; do
+  full_suggestion="${suggestions[$index]}"
+  >&2 echo -e "\n⚙️  DID YOU MEAN: $full_suggestion"
+  >&2 echo "Press ↑ for next suggestion, Enter to run, Ctrl+C to cancel."
+
+  IFS= read -rsn1 key
+  if [[ $key == $'\x1b' ]]; then
+    read -rsn2 next
+    if [[ $next == "[A" ]]; then
+      index=$(( (index + 1) % total ))
+    fi
+  elif [[ $key == "" ]]; then
+    echo "$full_suggestion"
+    break
+  fi
+done
