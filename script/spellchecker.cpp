@@ -54,7 +54,14 @@ vector<pair<int, string>> commands_by_length = {
     {8, "javac"}, {8, "javap"},
 
     {9, "traceroute"}
+
+    
 };
+vector<string> twoWordCommands = {
+    "git push", "git pull", "git commit", "git checkout", "git clone",
+    "git status", "git add", "sudo apt", "sudo dnf", "sudo yum"
+};
+
 
 // ------------------ Suggest Closest Command ------------------
 string suggestClosest(const string& input, int maxDistance = 2) {
@@ -77,6 +84,8 @@ string suggestClosest(const string& input, int maxDistance = 2) {
 }
 
 // ------------------ Main ------------------
+
+
 int main(int argc, char* argv[]) {
     if (argc != 2) {
         cerr << "Usage: ./spellchecker \"entire command\"\n";
@@ -88,27 +97,48 @@ int main(int argc, char* argv[]) {
     vector<string> words;
     string word;
 
-    // Split the command into words
-    while (ss >> word) {
-        words.push_back(word);
-    }
+    while (ss >> word) words.push_back(word);
 
     if (words.empty()) {
         cerr << "No command entered.\n";
         return 1;
     }
 
-    // Only correct the first word (the command)
-    string correctedCommand = suggestClosest(words[0]);
+    // Combine first 2 words and compare against 2-word commands
+    string correctedCmd;
+    if (words.size() >= 2) {
+        string combined = words[0] + " " + words[1];
+        string best = "";
+        int bestDist = 3;  // allow up to 2 total typos across both words
 
-    // Reconstruct full command
+        for (const string& cmd : twoWordCommands) {
+            int dist = levenshteinDistance(combined, cmd);
+            if (dist < bestDist) {
+                best = cmd;
+                bestDist = dist;
+            }
+        }
+
+        if (!best.empty()) {
+            correctedCmd = best;
+            words.erase(words.begin());  // remove first
+            words.erase(words.begin());  // remove second
+        }
+    }
+
+    // If no close 2-word command found, just fix the first word
+    if (correctedCmd.empty()) {
+        correctedCmd = suggestClosest(words[0]);
+        words.erase(words.begin());
+    }
+
+    // Reconstruct the full command
     stringstream corrected;
-    corrected << correctedCommand;
-    for (size_t i = 1; i < words.size(); ++i) {
-        corrected << " " << words[i];
+    corrected << correctedCmd;
+    for (const string& w : words) {
+        corrected << " " << w;
     }
 
     cout << corrected.str() << endl;
     return 0;
 }
-
