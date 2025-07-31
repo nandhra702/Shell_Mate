@@ -23,7 +23,7 @@ int main() {
 
     fin.close();
 
-    cout << "Last full line: " << lastLine << endl;
+    
 
     // Check if it's a 'cd' command
     int colon_pos = lastLine.find(':');
@@ -32,7 +32,6 @@ int main() {
         string checking_command = command_part.substr(0, 5);
 
         if (checking_command.find("cd") != string::npos) {
-            cout << "Command is a cd — ignore." << endl;
             return 0;
         }
     }
@@ -46,21 +45,53 @@ int main() {
         size_t second_delim = lastLine.find("||", first_delim + 2);
         if (second_delim != string::npos) {
             directory = lastLine.substr(first_delim + 3, second_delim - (first_delim + 3));
-            cout << "Extracted directory path: [" << directory << "]" << endl;
+            
         } else {
             cout << "Second delimiter not found." << endl;
         }
     }
 
+    //alright, we have the directory now, firstly, we are gonna read the contents of the file into a vector
+    ifstream dir_in("/home/sukhaj/Shell_Mate/script/recent_dirs.txt");
+    if (!dir_in) {
+        cerr << "Unable to open file" << endl;
+        return 1;
+    }
+
+    vector<string> jump_addresses(5);  // Fixed-size vector with 5 empty strings
+int flag = 0; // Flag to indicate if directory already exists
+string directory_file_line;
+int vec_count = 0;
+
+// Read existing non-empty lines into the vector
+while (getline(dir_in, directory_file_line)) {
+    if (!directory_file_line.empty()) {
+        if (directory_file_line == directory) {
+            flag = 1;
+        }
+        if (vec_count < 5) {
+            jump_addresses[vec_count++] = directory_file_line;
+        }
+    }
+}
+
+dir_in.close();
+
+if (flag == 0) {
+    // Address doesn't exist, insert using circular overwrite
+    jump_addresses[vec_count % 5] = directory;
+}
+
+// Now, write back to file
+ofstream fout("/home/sukhaj/Shell_Mate/script/recent_dirs.txt");
+for (int i = 0; i < 5; i++) {
+    if (!jump_addresses[i].empty()) {
+        fout << jump_addresses[i] << '\n';
+    }
+}
+fout.close();
+
     
-    int current_index = 0;  //A global variables
-    //perfect now I have the directory, now I need to store this directory in a vector. 
-    vector<string> jump_addresses(5, "");  // size 5, all entries ""
-  //we initialize a vector of a fixed size to a size of 5
-    jump_addresses[current_index] = directory;
-    current_index = (current_index + 1) % 5;
-
-
-
-    return 0;
+    
+     return 0;
 }
