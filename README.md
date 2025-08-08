@@ -16,6 +16,7 @@
 ---
 
 ## Installation
+(STEPS YET TO BE COMPLETED)
 
 ```bash
 git clone https://github.com/nandhra702/shell_mate.git
@@ -40,7 +41,7 @@ source ~/.bashrc
 
 ##  Roadmap Ideas
 
-- [ ] `zoxide`-like smart directory jumping
+- [ ] `zoxide`-like smart directory jumping (DONE SCENE)
 
 ---
 
