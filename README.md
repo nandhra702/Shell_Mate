@@ -12,6 +12,8 @@
 > Auto-trims the log file if it gets too big  
 > Use `showlog` from *anywhere* to view the logs  
 > Simple installation, lightweight footprint
+> Directory jumping has been enabled :)
+
 
 ---
 
