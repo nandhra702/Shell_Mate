@@ -1,3 +1,4 @@
+#Directory jumping and demo to be added to the readme.md
 #  Shell Mate
 
 > Terminal command logger 
